@@ -1,2 +1,35 @@
-package com.winners.scoreboard.entity;public class Course {
+package com.winners.scoreboard.entity;
+
+import jakarta.persistence.*;
+
+// Course.java
+@Entity
+@Table(name = "courses")
+public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long courseId;
+
+    @Column(nullable = false, unique = true)
+    private String courseName;
+
+    // Getters and Setters
+
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
 }
+
