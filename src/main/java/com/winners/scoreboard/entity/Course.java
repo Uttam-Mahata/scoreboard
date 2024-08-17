@@ -2,6 +2,9 @@ package com.winners.scoreboard.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 // Course.java
 @Entity
 @Table(name = "courses")
@@ -12,6 +15,9 @@ public class Course {
 
     @Column(nullable = false, unique = true)
     private String courseName;
+
+
+
 
     // Getters and Setters
 

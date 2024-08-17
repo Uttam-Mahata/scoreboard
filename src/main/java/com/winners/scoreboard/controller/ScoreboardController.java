@@ -18,6 +18,9 @@ public class ScoreboardController {
     @Autowired
     private ScoreboardService scoreboardService;
 
+//    Load Courses
+
+
     @GetMapping("/exam/{examId}")
     public ResponseEntity<List<Scoreboard>> getScoreboardByExam(@PathVariable Long examId) {
         List<Scoreboard> scoreboard = scoreboardService.getScoreboardByExam(examId);

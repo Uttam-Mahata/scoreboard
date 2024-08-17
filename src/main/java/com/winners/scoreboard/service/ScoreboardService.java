@@ -24,6 +24,7 @@ public class ScoreboardService {
 
     @Autowired
     private StudentRepository studentRepository;
+    
 
     public List<Scoreboard> getScoreboardByExam(Long examId) {
         Optional<Exam> examOpt = examRepository.findById(examId);

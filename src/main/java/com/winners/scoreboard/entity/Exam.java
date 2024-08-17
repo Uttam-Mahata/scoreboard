@@ -21,6 +21,8 @@ public class Exam {
     @Column(nullable = false)
     private int fullMarks;
 
+
+
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;

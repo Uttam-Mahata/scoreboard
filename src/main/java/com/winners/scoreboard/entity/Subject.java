@@ -2,6 +2,9 @@ package com.winners.scoreboard.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Subject.java
 @Entity
 @Table(name = "subjects")
@@ -13,9 +16,14 @@ public class Subject {
     @Column(nullable = false)
     private String subjectName;
 
+
+
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
+
+
+
 
     // Getters and Setters
 
@@ -42,5 +50,6 @@ public class Subject {
     public void setCourse(Course course) {
         this.course = course;
     }
+
 }
 
