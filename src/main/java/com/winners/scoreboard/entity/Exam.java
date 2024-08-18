@@ -3,8 +3,9 @@ package com.winners.scoreboard.entity;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-// Exam.java
 @Entity
 @Table(name = "exams")
 public class Exam {
@@ -21,14 +22,14 @@ public class Exam {
     @Column(nullable = false)
     private int fullMarks;
 
-
-
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Scoreboard> scores = new HashSet<>();
 
+    // Getters and Setters
 
     public Long getExamId() {
         return examId;
@@ -69,5 +70,12 @@ public class Exam {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
-}
 
+    public Set<Scoreboard> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Scoreboard> scores) {
+        this.scores = scores;
+    }
+}

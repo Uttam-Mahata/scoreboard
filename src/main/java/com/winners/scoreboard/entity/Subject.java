@@ -1,11 +1,9 @@
 package com.winners.scoreboard.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.util.ArrayList;
-import java.util.List;
-
-// Subject.java
 @Entity
 @Table(name = "subjects")
 public class Subject {
@@ -16,14 +14,12 @@ public class Subject {
     @Column(nullable = false)
     private String subjectName;
 
-
-
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-
-
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Exam> exams = new HashSet<>();
 
     // Getters and Setters
 
@@ -51,5 +47,11 @@ public class Subject {
         this.course = course;
     }
 
-}
+    public Set<Exam> getExams() {
+        return exams;
+    }
 
+    public void setExams(Set<Exam> exams) {
+        this.exams = exams;
+    }
+}
