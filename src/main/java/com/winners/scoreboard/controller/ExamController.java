@@ -1,10 +1,13 @@
 package com.winners.scoreboard.controller;
 
+import com.winners.scoreboard.entity.Course;
 import com.winners.scoreboard.entity.Exam;
+import com.winners.scoreboard.entity.Subject;
+import com.winners.scoreboard.repository.SubjectRepository;
 import com.winners.scoreboard.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -15,25 +18,56 @@ public class ExamController {
     @Autowired
     private ExamService examService;
 
-    @GetMapping("/subject/{subjectId}")
-    public List<Exam> getExamsBySubject(@PathVariable Long subjectId) {
-        return examService.getExamsBySubject(subjectId);
+    private SubjectRepository subjectRepository;
+
+    @GetMapping("/courses")
+    public List<Course> getAllCourses() {
+        return examService.getAllCourses();
     }
 
-    @PostMapping
-    public Exam createExam(@RequestBody Exam exam) {
-        return examService.createExam(exam);
+    @GetMapping("/subjects")
+    public List<Subject> getSubjectsByCourse(@RequestParam Long courseId) {
+        Course course = new Course();
+        course.setCourseId(courseId);
+        return examService.getSubjectsByCourse(course);
     }
 
-    @PutMapping("/{examId}")
-    public Exam updateExam(@PathVariable Long examId, @RequestBody Exam examDetails) {
-        return examService.updateExam(examId, examDetails);
+    @GetMapping("/list")
+    public List<Exam> getExamsBySubject(@RequestParam Long subjectId) {
+        Subject subject = new Subject();
+        subject.setSubjectId(subjectId);
+        return examService.getExamsBySubject(subject);
     }
 
-    @DeleteMapping("/{examId}")
-    public ResponseEntity<Void> deleteExam(@PathVariable Long examId) {
-        examService.deleteExam(examId);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/add")
+    public Exam addExam(@RequestBody Exam exam) {
+        if (exam.getSubject() != null && exam.getSubject().getSubjectId() != null) {
+            Subject subject = subjectRepository.findById(exam.getSubject().getSubjectId()).orElse(null);
+            if (subject != null) {
+                exam.setSubject(subject);
+            } else {
+                throw new RuntimeException("Subject not found");
+            }
+        }
+        return examService.saveExam(exam);
+    }
+
+
+    @PutMapping("/edit/{id}")
+    public Exam updateExam(@PathVariable Long id, @RequestBody Exam examDetails) {
+        Exam exam = examService.getExamById(id);
+        if (exam != null) {
+            exam.setExamName(examDetails.getExamName());
+            exam.setExamDate(examDetails.getExamDate());
+            exam.setFullMarks(examDetails.getFullMarks());
+            exam.setSubject(examDetails.getSubject());
+            return examService.saveExam(exam);
+        }
+        return null; // or throw an exception
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteExam(@PathVariable Long id) {
+        examService.deleteExam(id);
     }
 }
-

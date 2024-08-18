@@ -25,6 +25,7 @@ public class Subject {
 
 
 
+
     // Getters and Setters
 
     public Long getSubjectId() {
