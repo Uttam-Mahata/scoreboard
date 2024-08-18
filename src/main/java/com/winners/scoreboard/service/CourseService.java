@@ -43,4 +43,3 @@ public class CourseService {
         courseRepository.delete(course);
     }
 }
-
