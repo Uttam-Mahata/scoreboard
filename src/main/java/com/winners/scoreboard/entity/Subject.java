@@ -21,6 +21,7 @@ public class Subject {
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Exam> exams = new HashSet<>();
 
+
     // Getters and Setters
 
     public Long getSubjectId() {
@@ -40,11 +41,13 @@ public class Subject {
     }
 
     public Course getCourse() {
+
         return course;
     }
 
     public void setCourse(Course course) {
         this.course = course;
+
     }
 
     public Set<Exam> getExams() {

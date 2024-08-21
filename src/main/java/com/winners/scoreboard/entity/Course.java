@@ -14,11 +14,7 @@ public class Course {
     @Column(nullable = false, unique = true)
     private String courseName;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Subject> subjects = new HashSet<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Student> students = new HashSet<>();
 
     // Getters and Setters
 

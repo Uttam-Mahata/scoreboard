@@ -24,9 +24,17 @@ public class SubjectService {
         return subjectRepository.findByCourse(course);
     }
 
+//    public Subject createSubject(Subject subject) {
+//        return subjectRepository.save(subject);
+//    }
+
     public Subject createSubject(Subject subject) {
+        // Ensure the course is properly set before saving
+        Course course = courseService.getCourseById(subject.getCourse().getCourseId());
+        subject.setCourse(course);
         return subjectRepository.save(subject);
     }
+
 
     public Subject updateSubject(Long subjectId, Subject subjectDetails) {
         Subject subject = subjectRepository.findById(subjectId)
