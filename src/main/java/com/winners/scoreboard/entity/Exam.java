@@ -1,33 +1,32 @@
 package com.winners.scoreboard.entity;
 
 import jakarta.persistence.*;
+import java.util.Date;
 
-import java.sql.Date;
-
-// Exam.java
 @Entity
-@Table(name = "exams")
+@Table(name = "Exams")
 public class Exam {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exam_id")
     private Long examId;
 
-    @Column(nullable = false)
+    @Column(name = "exam_name", nullable = false)
     private String examName;
 
-    @Column(nullable = false)
+    @Column(name = "exam_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date examDate;
 
-    @Column(nullable = false)
-    private int fullMarks;
-
-
+    @Column(name = "full_marks", nullable = false)
+    private Integer fullMarks;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    // Getters and Setters
+    // Constructors, Getters, and Setters
 
 
     public Long getExamId() {
@@ -54,11 +53,11 @@ public class Exam {
         this.examDate = examDate;
     }
 
-    public int getFullMarks() {
+    public Integer getFullMarks() {
         return fullMarks;
     }
 
-    public void setFullMarks(int fullMarks) {
+    public void setFullMarks(Integer fullMarks) {
         this.fullMarks = fullMarks;
     }
 
@@ -70,4 +69,3 @@ public class Exam {
         this.subject = subject;
     }
 }
-
