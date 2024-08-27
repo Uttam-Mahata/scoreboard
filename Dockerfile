@@ -1,22 +1,24 @@
 # Use Maven 3.8.6 with OpenJDK 21 for building the project
-FROM maven:3.8.6-openjdk-21-slim as builder
+FROM maven:3.8.2-openjdk-11 as build
 
-WORKDIR /usr/target
+# Set the working directory in the container
 
-COPY . /usr/target
+# Copy the Maven project files to the container
+COPY pom.xml .
+COPY src ./src
+COPY . .
 
 # Package the application
-RUN mvn package
+RUN mvn clean package -DskipTests
 
 # Use a lightweight OpenJDK 21 runtime for running the application
-FROM openjdk:21-jre-slim
+FROM openjdk:11-jdk-slim
 
-# Copy the packaged application from the builder stage
-COPY --from=builder /usr/target/wscoreboard.jar /app.jar
+# Copy the packaged JAR file from the builder stage to the runtime stage
+COPY --from=build /target/wscoreboard.jar /app.jar
 
 # Expose the application port
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java"]
-CMD ["-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
