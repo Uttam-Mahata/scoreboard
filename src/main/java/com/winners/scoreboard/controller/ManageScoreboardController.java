@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/manage-scoreboard")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ManageScoreboardController {
 
     @Autowired
