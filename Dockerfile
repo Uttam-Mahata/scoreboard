@@ -3,12 +3,12 @@
 ################################################################################
 
 # Base image to download dependencies
-FROM eclipse-temurin:17-jdk-jammy as deps
+FROM eclipse-temurin:21-jdk-jammy as deps
 
 WORKDIR /build
 
 # Copy the Maven wrapper files
-COPY --chmod=0755 mvnw.cmd mvnw.cmd
+COPY --chmod=0755 mvnw mvnw
 COPY .mvn/ .mvn/
 
 # Copy the pom.xml to download dependencies
@@ -26,19 +26,19 @@ WORKDIR /build
 COPY src ./src
 
 # Compile the application
-RUN ./mvnw.cmd clean install
+RUN ./mvnw clean package
 
 ################################################################################
 
 # Create a minimal image with only the JRE
-FROM eclipse-temurin:17-jre-jammy as runtime
+FROM eclipse-temurin:21-jre-jammy as runtime
 
 
 
 WORKDIR /app
 
 # Copy the compiled JAR file from the build stage
-COPY --from=build /target/scoreboard.jar app.jar
+COPY --from=build ./target/scoreboard.jar app.jar
 
 # Expose the application port
 EXPOSE 8080
