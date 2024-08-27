@@ -1,18 +1,18 @@
-# Use Maven 3.8.6 with JDK 21 for building the project
-FROM maven:3.8.6-eclipse-temurin-21-alpine as builder
+# Use Maven 3.8.6 with OpenJDK 21 for building the project
+FROM maven:3.8.6-openjdk-21-slim as builder
 
-WORKDIR /usr/src/app
+WORKDIR /usr/target
 
-COPY . /usr/src/app
+COPY . /usr/target
 
 # Package the application
 RUN mvn package
 
-# Use a lightweight JDK 21 runtime for running the application
-FROM eclipse-temurin:21-jre-alpine
+# Use a lightweight OpenJDK 21 runtime for running the application
+FROM openjdk:21-jre-slim
 
 # Copy the packaged application from the builder stage
-COPY --from=builder /usr/src/app/target/wscoreboard.jar /app.jar
+COPY --from=builder /usr/target/wscoreboard.jar /app.jar
 
 # Expose the application port
 EXPOSE 8080
