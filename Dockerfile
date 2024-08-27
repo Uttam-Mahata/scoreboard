@@ -1,15 +1,8 @@
-FROM maven:3-jdk-8-alpine as builder
-
+FROM maven:3.8.6-openjdk-17 AS build
 WORKDIR /usr/src/app
+COPY . .
+RUN mvn clean package
 
-COPY . /usr/src/app
-RUN mvn package
-
-FROM openjdk:8-jre-alpine
-
-COPY --from=builder /usr/src/app/target/*.jar /app.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java"]
-CMD ["-jar", "/app.jar"]
+FROM openjdk:17-jre-slim
+COPY --from=build /usr/src/app/target/scoreboard.war /usr/local/lib/scoreboard.war
+ENTRYPOINT ["java","-jar","/usr/local/lib/scoreboard.war"]
