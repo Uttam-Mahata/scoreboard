@@ -1,0 +1,33 @@
+
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.application.name=scoreboard
+      - spring.datasource.url=jdbc:mysql://db:3306/scoreboard
+      - spring.datasource.username=root
+      - spring.datasource.password=Uttam111#
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: scoreboard
+      MYSQL_ROOT_PASSWORD: Uttam111#
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
