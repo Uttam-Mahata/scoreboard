@@ -1,22 +1,10 @@
-FROM openjdk:21-slim
+FROM maven:3.9.9-openjdk-8 AS build
+COPY . .
+RUN mvn clean package -DskipTests
 
+FROM openjdk:17.0.1-jdk-slim
 
-# Expose the Spring Boot port (default 8080)
+COPY --from=build /target/scoreboard.jar demo.jar
+
 EXPOSE 8080
-
-
-ADD target/scoreboard.jar scoreboard.jar
-
-
-
-
-
-#
-## Copy the JAR file from the context
-#COPY target/*.jar app.jar
-
-
-
-
-# Start the application using java -jar
-ENTRYPOINT ["java", "-jar", "scoreboard.jar"]
+ENTRYPOINT ["java","-jar","demo.jar"]
