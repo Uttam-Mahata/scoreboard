@@ -76,7 +76,7 @@
 
 
 	<build>
-		<finalName>wscoreboard</finalName>
+		<finalName>scoreboard</finalName>
 		<plugins>
 
 			<plugin>
