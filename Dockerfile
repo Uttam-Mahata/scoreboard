@@ -16,7 +16,7 @@ COPY src /app/src
 RUN mvn clean package -DskipTests
 
 # Use the official OpenJDK image to run the application
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jre-jammy AS final
 
 # Set the working directory in the container
 WORKDIR /app
