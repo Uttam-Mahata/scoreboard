@@ -1,8 +1,4 @@
-FROM maven:3.8.5-openjdk-11 AS build
-COPY . .
-RUN mvn clean install
+FROM ubuntu:latest
+LABEL authors="uttam"
 
-FROM openjdk:11-jdk-slim-sid
-ADD /target/scoreboard.jar scoreboard.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","scoreboard.jar"]
+ENTRYPOINT ["top", "-b"]
