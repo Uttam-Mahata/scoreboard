@@ -22,7 +22,7 @@ FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
 
 # Copy the jar file from the build stage
-COPY --from=build /app/target/scoreboard.jar /app/scoreboard.jar
+COPY --from=build /target/scoreboard.jar /app/scoreboard.jar
 
 # Expose the port the application runs on
 EXPOSE 8080
