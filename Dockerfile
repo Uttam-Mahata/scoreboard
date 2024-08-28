@@ -1,12 +1,7 @@
-FROM openjdk:17-slim
+FROM openjdk:8-jdk-alpine
 
+ARG JAR_FILE=target/scoreboard.jar
 
-COPY . .
-RUN mvn clean install -DskipTests
+COPY ${JAR_FILE} app.jar
 
-FROM openjdk:17.0.1-jdk-slim
-
-COPY --from=build /target/scoreboard.jar demo.jar
-
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
