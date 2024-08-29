@@ -1,19 +1,18 @@
 package com.winners.scoreboard.controller;
 
 import com.winners.scoreboard.entity.*;
-import com.winners.scoreboard.service.ScoreboardService;
+import com.winners.scoreboard.service.ManageScoreboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/scoreboard")
-
-public class ScoreboardController {
+@RequestMapping("/api/manage-scoreboard")
+public class ManageScoreboardController {
 
     @Autowired
-    private ScoreboardService scoreboardService;
+    private ManageScoreboardService scoreboardService;
 
     @GetMapping("/courses")
     public List<Course> getCourses() {
@@ -35,10 +34,26 @@ public class ScoreboardController {
         return scoreboardService.getStudentsByCourse(courseId);
     }
 
+    @GetMapping("/scores/{examId}")
+    public List<Scoreboard> getScoresByExam(@PathVariable Long examId) {
+        return scoreboardService.getScoresByExam(examId);
+    }
+
     @PostMapping("/add-score")
     public Scoreboard addScore(@RequestParam Long examId,
                                @RequestParam Long studentId,
                                @RequestParam int obtainedMarks) {
         return scoreboardService.addScore(examId, studentId, obtainedMarks);
+    }
+
+    @PutMapping("/update-score/{scoreboardId}")
+    public Scoreboard updateScore(@PathVariable Long scoreboardId,
+                                  @RequestParam int obtainedMarks) {
+        return scoreboardService.updateScore(scoreboardId, obtainedMarks);
+    }
+
+    @DeleteMapping("/delete-score/{scoreboardId}")
+    public void deleteScore(@PathVariable Long scoreboardId) {
+        scoreboardService.deleteScore(scoreboardId);
     }
 }

@@ -1,15 +1,14 @@
-FROM maven:3-jdk-8-alpine as builder
+# Step 1: Use an official OpenJDK runtime as the base image
+FROM eclipse-temurin:21-jre
 
-WORKDIR /usr/src/app
+# Step 2: Set the working directory for the application
+WORKDIR /app
 
-COPY . /usr/src/app
-RUN mvn package
+# Step 3: Copy the JAR file from your local machine to the container
+COPY target/scoreboard.jar /app/scoreboard.jar
 
-FROM openjdk:8-jre-alpine
-
-COPY --from=builder /usr/src/app/target/*.jar /app.jar
-
+# Step 4: Expose the application port (optional, default for Spring Boot is 8080)
 EXPOSE 8080
 
-ENTRYPOINT ["java"]
-CMD ["-jar", "/app.jar"]
+# Step 5: Set the entry point to run the application
+ENTRYPOINT ["java", "-jar", "/app/scoreboard.jar"]

@@ -7,13 +7,14 @@ import com.winners.scoreboard.repository.CourseRepository;
 import com.winners.scoreboard.repository.ExamRepository;
 import com.winners.scoreboard.repository.SubjectRepository;
 import com.winners.scoreboard.service.ExamService;
+import com.winners.scoreboard.service.ManageExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ExamServiceImpl implements ExamService {
+public class ManageExamServiceImpl implements ManageExamService {
 
     @Autowired
     private CourseRepository courseRepository;

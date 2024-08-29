@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "students")
+@Table(name = "Students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,35 +1,33 @@
 package com.winners.scoreboard.entity;
 
 import jakarta.persistence.*;
-
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 @Entity
-@Table(name = "exams")
+@Table(name = "Exams")
 public class Exam {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exam_id")
     private Long examId;
 
-    @Column(nullable = false)
+    @Column(name = "exam_name", nullable = false)
     private String examName;
 
-    @Column(nullable = false)
+    @Column(name = "exam_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date examDate;
 
-    @Column(nullable = false)
-    private int fullMarks;
+    @Column(name = "full_marks", nullable = false)
+    private Integer fullMarks;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Scoreboard> scores = new HashSet<>();
+    // Constructors, Getters, and Setters
 
-    // Getters and Setters
 
     public Long getExamId() {
         return examId;
@@ -55,11 +53,11 @@ public class Exam {
         this.examDate = examDate;
     }
 
-    public int getFullMarks() {
+    public Integer getFullMarks() {
         return fullMarks;
     }
 
-    public void setFullMarks(int fullMarks) {
+    public void setFullMarks(Integer fullMarks) {
         this.fullMarks = fullMarks;
     }
 
@@ -69,13 +67,5 @@ public class Exam {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
-    }
-
-    public Set<Scoreboard> getScores() {
-        return scores;
-    }
-
-    public void setScores(Set<Scoreboard> scores) {
-        this.scores = scores;
     }
 }

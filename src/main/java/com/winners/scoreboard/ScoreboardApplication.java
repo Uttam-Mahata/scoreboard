@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://scoreboard-latest.onrender.com")
 public class ScoreboardApplication {
 
 	public static void main(String[] args) {
@@ -13,3 +13,4 @@ public class ScoreboardApplication {
 	}
 
 }
+
