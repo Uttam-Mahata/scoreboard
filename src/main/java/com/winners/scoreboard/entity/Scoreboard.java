@@ -3,7 +3,7 @@ package com.winners.scoreboard.entity;
 import jakarta.persistence.*;
 // Scoreboard.java
 @Entity
-@Table(name = "scoreboard")
+@Table(name = "Scoreboard")
 public class Scoreboard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
